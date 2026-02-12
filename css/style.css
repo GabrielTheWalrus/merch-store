@@ -1038,3 +1038,23 @@ a:focus {
   padding: 0 !important;          /* remove padding */
   vertical-align: top !important; /* garante topo */
 }
+
+.insta-banner {
+  width: 100%;
+  background: #ff2d55; /* cor instagram vibe */
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding: 6px 10px;
+  font-weight: 500;
+}
+
+.insta-banner a {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.insta-banner a:hover {
+  opacity: 0.8;
+}
