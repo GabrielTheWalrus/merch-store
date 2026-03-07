@@ -53,12 +53,90 @@
       height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #ddd;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+    .songbook-sidebar h3 {
+      font-family: 'Base05', cursive;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .songbook-sidebar .album-header {
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+      padding-right: 1.5rem;
+      margin-top: 1rem;
+      color: #007bff;
+      transition: color 0.2s;
+    }
+    .songbook-sidebar .album-header:hover {
+      color: #0056b3;
+    }
+    .songbook-sidebar .album-header .fas {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      transition: transform 0.3s;
+    }
+    .songbook-sidebar .album-header.collapsed .fas {
+      transform: translateY(-50%) rotate(-90deg);
+    }
+    .songbook-sidebar .list-group-item {
+      border: none;
+      padding: .25rem 1rem;
+    }
+    .songbook-sidebar .list-group-item a {
+      color: #333;
+      text-decoration: none;
+    }
+    .songbook-sidebar .list-group-item a:hover,
+    .songbook-sidebar .list-group-item a.active {
+      color: #007bff;
     }
     .songbook-content {
       padding: 20px;
       background-color: #fff;
       border-left: 1px solid #ddd;
       min-height: 100vh;
+    }
+    .sidebar-toggle {
+      display: none;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      font-size: 1rem;
+      width: 100%;
+      text-align: left;
+    }
+    .sidebar-toggle:after {
+      content: '\2192';
+      float: right;
+    }
+    #song-content h2 {
+      margin-top: 0;
+    }
+    #song-content .welcome {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-top: 2rem;
+    }
+    /* placeholder box for empty state */
+    #song-content .placeholder {
+      border: 2px dashed #ccc;
+      padding: 60px 20px;
+      text-align: center;
+      color: #777;
+      background-color: #fafafa;
+      border-radius: 8px;
+    }
+    #song-content .placeholder h2 {
+      margin-bottom: 1rem;
     }
     .lyrics {
       display: flex;
@@ -173,8 +251,10 @@
         <div class="col-md-9 col-sm-12">
           <div class="songbook-content">
             <div id="song-content">
-              <h2>Welcome to the Songbook</h2>
-              <p>Select a song from the menu to view its details.</p>
+              <div class="placeholder">
+                <h2>Welcome to the Songbook</h2>
+                <p>Please choose a song</p>
+              </div>
             </div>
           </div>
         </div>
@@ -326,9 +406,9 @@ Algum refrão aqui`,
       songbookData.albums.forEach((album, albumIndex) => {
         const albumDiv = document.createElement('div');
         albumDiv.innerHTML = `
-          <h4 data-toggle="collapse" data-target="#album${albumIndex}" aria-expanded="false" aria-controls="album${albumIndex}" style="cursor: pointer;">
+          <div class="album-header collapsed" data-toggle="collapse" data-target="#album${albumIndex}" aria-expanded="false" aria-controls="album${albumIndex}">
             ${album.title} <i class="fas fa-chevron-down"></i>
-          </h4>
+          </div>
           <div id="album${albumIndex}" class="collapse">
             <ul class="list-group">
               ${album.songs.map(song => `<li class="list-group-item"><a href="#" onclick="loadSong('${song.id}'); return false;">${song.title}</a></li>`).join('')}
@@ -336,6 +416,18 @@ Algum refrão aqui`,
           </div>
         `;
         albumList.appendChild(albumDiv);
+
+        // handle chevron rotation on show/hide
+        const collapseTarget = document.getElementById(`album${albumIndex}`);
+        const headerEl = albumDiv.querySelector('.album-header');
+        if (collapseTarget && headerEl) {
+          $(collapseTarget).on('show.bs.collapse', () => {
+            headerEl.classList.remove('collapsed');
+          });
+          $(collapseTarget).on('hide.bs.collapse', () => {
+            headerEl.classList.add('collapsed');
+          });
+        }
       });
     }
 
@@ -349,6 +441,19 @@ Algum refrão aqui`,
         if (window.location.hash.slice(1) !== song.id) {
           window.location.hash = song.id;
         }
+
+        // highlight active song link and open its album
+        document.querySelectorAll('.songbook-sidebar .list-group-item a').forEach(a => {
+          const isActive = a.getAttribute('onclick').includes(`'${song.id}'`);
+          a.classList.toggle('active', isActive);
+          if (isActive) {
+            // expand parent collapse
+            const collapseEl = a.closest('.collapse');
+            if (collapseEl && !collapseEl.classList.contains('show')) {
+              $(collapseEl).collapse('show');
+            }
+          }
+        });
 
         const content = document.getElementById('song-content');
         content.innerHTML = `
