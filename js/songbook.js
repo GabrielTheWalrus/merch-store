@@ -61,45 +61,45 @@ songbookData.albums.forEach(album => {
   allSongs = allSongs.concat(album.songs);
 });
 
-// Function to render album grid
-function renderAlbumGrid() {
-  const grid = document.getElementById('album-grid');
-  grid.innerHTML = songbookData.albums.map((album, index) => `
-    <div class="album-card" data-album-index="${index}">
-      <img src="${album.image || 'https://via.placeholder.com/250x200?text=Album+Cover'}" alt="${album.title} cover">
-      <div class="card-body">
-        <h5>${album.title}</h5>
-      </div>
-      <div class="song-list" style="display: none;">
-        ${album.songs.map(song => `<div class="song-item" data-song-id="${song.id}">${song.title}</div>`).join('')}
-      </div>
+// Function to render album list in the sidebar
+function renderAlbumList() {
+  const list = document.getElementById('album-list');
+  list.innerHTML = songbookData.albums.map((album, index) => `
+    <div class="album-thumb" data-album-index="${index}">
+      <img src="${album.image || 'https://via.placeholder.com/50x50?text=Cover'}" alt="${album.title} cover">
+      <span>${album.title}</span>
     </div>
   `).join('');
 
-  // Add click handlers for albums
-  document.querySelectorAll('.album-card').forEach(card => {
-    card.addEventListener('click', function() {
-      const albumIndex = this.dataset.albumIndex;
-      const songList = this.querySelector('.song-list');
-      const isExpanded = this.classList.contains('album-expanded');
-
-      // Hide all other song lists
-      document.querySelectorAll('.song-list').forEach(list => list.style.display = 'none');
-      document.querySelectorAll('.album-card').forEach(c => c.classList.remove('album-expanded'));
-
-      if (!isExpanded) {
-        songList.style.display = 'block';
-        this.classList.add('album-expanded');
-      }
+  document.querySelectorAll('.album-thumb').forEach(el => {
+    el.addEventListener('click', function() {
+      const idx = this.dataset.albumIndex;
+      showAlbum(idx);
     });
   });
+}
 
-  // Add click handlers for songs
+// Show songs for a selected album
+function showAlbum(albumIndex) {
+  const album = songbookData.albums[albumIndex];
+  const songContent = document.getElementById('song-content');
+
+  // highlight selected album thumbnail
+  document.querySelectorAll('.album-thumb').forEach(el => {
+    el.classList.toggle('active', el.dataset.albumIndex == albumIndex);
+  });
+
+  songContent.innerHTML = `
+    <h2>${album.title}</h2>
+    <ul class="song-list">
+      ${album.songs.map(song => `<li class="song-item" data-song-id="${song.id}">${song.title}</li>`).join('')}
+    </ul>
+    <div id="song-details"></div>
+  `;
+
   document.querySelectorAll('.song-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.stopPropagation(); // Prevent album click
-      const songId = this.dataset.songId;
-      loadSong(songId);
+    item.addEventListener('click', function() {
+      loadSong(this.dataset.songId);
     });
   });
 }
@@ -120,8 +120,8 @@ function loadSong(songId) {
       item.classList.toggle('active', item.dataset.songId === song.id);
     });
 
-    const content = document.getElementById('song-content');
-    content.innerHTML = `
+    const detailsContainer = document.getElementById('song-details');
+    const htmlContent = `
       <h2>${song.title}</h2>
       <div class="lyrics">
         <div class="original">
@@ -129,8 +129,8 @@ function loadSong(songId) {
           <pre>${song.originalLyrics}</pre>
         </div>
         <div class="translated">
-          <h3>Translated Lyrics</h3>
-          <pre>${song.translatedLyrics}</pre>
+          <h3>Portuguese Translation</h3>
+          <pre>${song.portugueseLyrics}</pre>
         </div>
       </div>
       <div style="margin: 20px 0;">
@@ -145,6 +145,13 @@ function loadSong(songId) {
         <button class="btn btn-secondary" onclick="nextSong()" ${currentSongIndex === allSongs.length - 1 ? 'disabled' : ''}>Next</button>
       </div>
     `;
+
+    if (detailsContainer) {
+      detailsContainer.innerHTML = htmlContent;
+    } else {
+      const content = document.getElementById('song-content');
+      content.innerHTML = htmlContent;
+    }
   }
 }
 
@@ -161,13 +168,23 @@ function nextSong() {
 }
 
 // Initialize on page load
+function findAlbumIndexBySongId(songId) {
+  return songbookData.albums.findIndex(album =>
+    album.songs.some(song => song.id === songId)
+  );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  renderAlbumGrid();
-  // Handle deep link
+  renderAlbumList();
+  // Handle deep link to a specific song
   const hash = window.location.hash.slice(1);
   if (hash) {
     const songExists = allSongs.find(s => s.id === hash);
     if (songExists) {
+      const albumIdx = findAlbumIndexBySongId(hash);
+      if (albumIdx !== -1) {
+        showAlbum(albumIdx);
+      }
       loadSong(hash);
     }
   }
