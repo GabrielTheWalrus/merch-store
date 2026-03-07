@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXVD152S4P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TXVD152S4P');
+  </script>
+
+  <title> Gabriel Meale - Songbook </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
+  <style>
+    /* ensure hero background sits behind the page content */
+    .hero_area .bg-box {
+      z-index: -1;
+    }
+    .songbook-sidebar {
+      background-color: #fff; /* clean white for readability */
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+    .songbook-content {
+      padding: 20px;
+      background-color: #fff;
+      border-left: 1px solid #ddd;
+      min-height: 100vh;
+    }
+    .lyrics {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .lyrics .original, .lyrics .translated {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px;
+    }
+    .lyrics .original {
+      border-right: 1px solid #ddd;
+    }
+    .song-nav {
+      margin-top: 20px;
+    }
+    .song-nav button {
+      margin: 0 10px;
+    }
+    .sidebar-toggle {
+      display: none;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 768px) {
+      .songbook-sidebar {
+        height: auto;
+        position: absolute;
+        left: -100%;
+        top: 0;
+        width: 80%;
+        z-index: 1000;
+        transition: left 0.3s;
+      }
+      .songbook-sidebar.show {
+        left: 0;
+      }
+      .sidebar-toggle {
+        display: block;
+      }
+      .lyrics .original {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+      }
+      .songbook-content {
+        width: 100%;
+      }
+    }
+  </style>
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="bg-box" >
+      <img src="images/fon-temyy-darkblue-light.jpg" alt="">
+    </div>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Gabriel Meale
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  mx-auto ">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="songbook.html">Songbook <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="merchandising.html">Merchandising</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- songbook section -->
+  <section class="songbook_section layout_padding">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 col-sm-12">
+          <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Menu</button>
+          <div class="songbook-sidebar" id="sidebar">
+            <h3>Songbook</h3>
+            <div id="album-list">
+              <!-- Albums and songs will be populated by JS -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+          <div class="songbook-content">
+            <div id="song-content">
+              <h2>Welcome to the Songbook</h2>
+              <p>Select a song from the menu to view its details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end songbook section -->
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              GABRIEL MEALE
+            </a>
+            <p>
+              Artista Independente e Produtor Musical
+            </p>
+            <div class="footer_social">
+              <a href="https://www.instagram.com/gabs_the_walrus" target="_blank">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.youtube.com/@gabrielthewalrus" target="_blank">
+                <i class="fab fa-youtube" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contato
+            </h4>
+            <div class="contact_link_box">
+              <a href="mailto:gabriel.meale@hotmail.com">
+                <i class="fabfa-envelope" aria-hidden="true"></i>
+                <span>
+                  gabriel.meale@hotmail.com
+                </span>
+              </a>
+            </div>
+            <div class="footer_social">
+              <a href="https://www.instagram.com/gabs_the_walrus" target="_blank">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.youtube.com/@gabrielthewalrus" target="_blank">
+                <i class="fab fa-youtube" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Free Html Templates</a><br><br>
+          &copy; <span id="displayYear"></span> Distributed By
+          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="js/custom.js"></script>
+
+  <script>
+    // Songbook data
+    const songbookData = {
+      albums: [
+        {
+          title: "Album 1",
+          songs: [
+            {
+              id: "song1",
+              title: "Song 1",
+              originalLyrics: `Verse 1
+This is the original lyrics
+In English or whatever language
+
+Chorus
+Some chorus here`,
+              translatedLyrics: `Verso 1
+Esta é a letra original
+Em inglês ou qualquer idioma
+
+Refrão
+Algum refrão aqui`,
+              embedUrl: "https://open.spotify.com/embed/track/4iV5W9uYEdYUVa79Axb7Rh?utm_source=generator",
+              technical: "Vocals: Gabriel Meale<br>Guitar: Gabriel Meale<br>Drums: Programmed<br>Mixing: Gabriel Meale",
+              history: "This song was written during a creative period in 2023. It reflects personal experiences and emotions."
+            },
+            {
+              id: "song2",
+              title: "Song 2",
+              originalLyrics: "Another song lyrics...",
+              translatedLyrics: "Outra letra de música...",
+              embedUrl: "https://open.spotify.com/embed/track/example2",
+              technical: "Details here...",
+              history: "History here..."
+            }
+          ]
+        },
+        {
+          title: "Album 2",
+          songs: [
+            {
+              id: "song3",
+              title: "Song 3",
+              originalLyrics: "Lyrics...",
+              translatedLyrics: "Letra...",
+              embedUrl: "https://open.spotify.com/embed/track/example3",
+              technical: "Tech...",
+              history: "Hist..."
+            }
+          ]
+        }
+      ]
+    };
+
+    let currentSongIndex = -1;
+    let allSongs = [];
+
+    // Flatten songs for navigation
+    songbookData.albums.forEach(album => {
+      allSongs = allSongs.concat(album.songs);
+    });
+
+    // Function to load album list
+    function loadAlbumList() {
+      const albumList = document.getElementById('album-list');
+      songbookData.albums.forEach((album, albumIndex) => {
+        const albumDiv = document.createElement('div');
+        albumDiv.innerHTML = `
+          <h4 data-toggle="collapse" data-target="#album${albumIndex}" aria-expanded="false" aria-controls="album${albumIndex}" style="cursor: pointer;">
+            ${album.title} <i class="fas fa-chevron-down"></i>
+          </h4>
+          <div id="album${albumIndex}" class="collapse">
+            <ul class="list-group">
+              ${album.songs.map(song => `<li class="list-group-item"><a href="#" onclick="loadSong('${song.id}'); return false;">${song.title}</a></li>`).join('')}
+            </ul>
+          </div>
+        `;
+        albumList.appendChild(albumDiv);
+      });
+    }
+
+    // Function to load song content
+    function loadSong(songId) {
+      currentSongIndex = allSongs.findIndex(song => song.id === songId);
+      const song = allSongs[currentSongIndex];
+
+      if (song) {
+        // update hash for deep-linking
+        if (window.location.hash.slice(1) !== song.id) {
+          window.location.hash = song.id;
+        }
+
+        const content = document.getElementById('song-content');
+        content.innerHTML = `
+          <h2>${song.title}</h2>
+          <div class="lyrics">
+            <div class="original">
+              <h3>Original Lyrics</h3>
+              <pre>${song.originalLyrics}</pre>
+            </div>
+            <div class="translated">
+              <h3>Translated Lyrics</h3>
+              <pre>${song.translatedLyrics}</pre>
+            </div>
+          </div>
+          <div style="margin: 20px 0;">
+            <iframe style="border-radius:12px" src="${song.embedUrl}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+          <h3>Technical Details</h3>
+          <p>${song.technical}</p>
+          <h3>History</h3>
+          <p>${song.history}</p>
+          <div class="song-nav">
+            <button class="btn btn-secondary" onclick="prevSong()" ${currentSongIndex === 0 ? 'disabled' : ''}>Previous</button>
+            <button class="btn btn-secondary" onclick="nextSong()" ${currentSongIndex === allSongs.length - 1 ? 'disabled' : ''}>Next</button>
+          </div>
+        `;
+
+        // hide mobile sidebar after selection
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('show')) {
+          sidebar.classList.remove('show');
+        }
+      }
+    }
+
+    function prevSong() {
+      if (currentSongIndex > 0) {
+        loadSong(allSongs[currentSongIndex - 1].id);
+      }
+    }
+
+    function nextSong() {
+      if (currentSongIndex < allSongs.length - 1) {
+        loadSong(allSongs[currentSongIndex + 1].id);
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('show');
+    }
+
+    // Load album list on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAlbumList();
+      // If there's a hash in URL, try to load that song
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        const songExists = allSongs.find(s => s.id === hash);
+        if (songExists) {
+          loadSong(hash);
+          // also expand the album containing this song
+          songbookData.albums.forEach((album, idx) => {
+            if (album.songs.some(s => s.id === hash)) {
+              const collapseEl = document.getElementById(`album${idx}`);
+              if (collapseEl && !collapseEl.classList.contains('show')) {
+                // bootstrap collapse toggle
+                $(collapseEl).collapse('show');
+              }
+            }
+          });
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>
