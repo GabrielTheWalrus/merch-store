@@ -68,40 +68,58 @@ function renderAlbumList() {
     <div class="album-thumb" data-album-index="${index}">
       <img src="${album.image || 'https://via.placeholder.com/50x50?text=Cover'}" alt="${album.title} cover">
       <span>${album.title}</span>
+      <ul class="song-dropdown" style="display: none;">
+        ${album.songs.map(song => `<li class="song-item" data-song-id="${song.id}">${song.title}</li>`).join('')}
+      </ul>
     </div>
   `).join('');
 
   document.querySelectorAll('.album-thumb').forEach(el => {
     el.addEventListener('click', function() {
       const idx = this.dataset.albumIndex;
-      showAlbum(idx);
+      toggleAlbumDropdown(idx);
+    });
+  });
+
+  document.querySelectorAll('.song-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent album click
+      const songId = this.dataset.songId;
+      loadSong(songId);
     });
   });
 }
 
-// Show songs for a selected album
-function showAlbum(albumIndex) {
+// Toggle dropdown for a selected album
+function toggleAlbumDropdown(albumIndex) {
   const album = songbookData.albums[albumIndex];
-  const songContent = document.getElementById('song-content');
+  const albumThumb = document.querySelector(`.album-thumb[data-album-index="${albumIndex}"]`);
+  const dropdown = albumThumb.querySelector('.song-dropdown');
+  const preview = document.getElementById('album-preview');
 
-  // highlight selected album thumbnail
+  // Hide all other dropdowns
+  document.querySelectorAll('.song-dropdown').forEach(dd => {
+    if (dd !== dropdown) dd.style.display = 'none';
+  });
   document.querySelectorAll('.album-thumb').forEach(el => {
-    el.classList.toggle('active', el.dataset.albumIndex == albumIndex);
+    el.classList.remove('active');
   });
 
-  songContent.innerHTML = `
-    <h2>${album.title}</h2>
-    <ul class="song-list">
-      ${album.songs.map(song => `<li class="song-item" data-song-id="${song.id}">${song.title}</li>`).join('')}
-    </ul>
-    <div id="song-details"></div>
-  `;
-
-  document.querySelectorAll('.song-item').forEach(item => {
-    item.addEventListener('click', function() {
-      loadSong(this.dataset.songId);
-    });
-  });
+  // Toggle this one
+  if (dropdown.style.display === 'none') {
+    dropdown.style.display = 'block';
+    albumThumb.classList.add('active');
+    // Show album preview
+    preview.innerHTML = `
+      <img src="${album.image || 'https://via.placeholder.com/150x150?text=Cover'}" alt="${album.title}">
+      <h3>${album.title}</h3>
+    `;
+  } else {
+    dropdown.style.display = 'none';
+    albumThumb.classList.remove('active');
+    // Hide preview
+    preview.innerHTML = '';
+  }
 }
 
 // Function to load song content
@@ -120,8 +138,8 @@ function loadSong(songId) {
       item.classList.toggle('active', item.dataset.songId === song.id);
     });
 
-    const detailsContainer = document.getElementById('song-details');
-    const htmlContent = `
+    const content = document.getElementById('song-content');
+    content.innerHTML = `
       <h2>${song.title}</h2>
       <div class="lyrics">
         <div class="original">
@@ -145,13 +163,6 @@ function loadSong(songId) {
         <button class="btn btn-secondary" onclick="nextSong()" ${currentSongIndex === allSongs.length - 1 ? 'disabled' : ''}>Next</button>
       </div>
     `;
-
-    if (detailsContainer) {
-      detailsContainer.innerHTML = htmlContent;
-    } else {
-      const content = document.getElementById('song-content');
-      content.innerHTML = htmlContent;
-    }
   }
 }
 
@@ -183,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (songExists) {
       const albumIdx = findAlbumIndexBySongId(hash);
       if (albumIdx !== -1) {
-        showAlbum(albumIdx);
+        toggleAlbumDropdown(albumIdx);
       }
       loadSong(hash);
     }
