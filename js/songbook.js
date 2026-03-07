@@ -35,21 +35,21 @@ Algum refrão aqui`,
         }
       ]
     },
-    {
-      title: "Album 2",
-      image: "images/album2.jpg", // Add your album cover image path
-      songs: [
-        {
-          id: "song3",
-          title: "Song 3",
-          originalLyrics: "Lyrics...",
-          translatedLyrics: "Letra...",
-          embedUrl: "https://open.spotify.com/embed/track/example3",
-          technical: "Tech...",
-          history: "Hist..."
-        }
-      ]
-    }
+    // {
+    //   title: "Album 2",
+    //   image: "images/album2.jpg", // Add your album cover image path
+    //   songs: [
+    //     {
+    //       id: "song3",
+    //       title: "Song 3",
+    //       originalLyrics: "Lyrics...",
+    //       translatedLyrics: "Letra...",
+    //       embedUrl: "https://open.spotify.com/embed/track/example3",
+    //       technical: "Tech...",
+    //       history: "Hist..."
+    //     }
+    //   ]
+    // }
   ]
 };
 
@@ -81,7 +81,7 @@ function renderAlbumGrid() {
     card.addEventListener('click', function() {
       const albumIndex = this.dataset.albumIndex;
       const songList = this.querySelector('.song-list');
-      const isExpanded = songList.style.display === 'block';
+      const isExpanded = this.classList.contains('album-expanded');
 
       // Hide all other song lists
       document.querySelectorAll('.song-list').forEach(list => list.style.display = 'none');
