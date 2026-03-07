@@ -15,10 +15,12 @@
   cursor: pointer;
   padding: 5px;
   transition: background-color 0.2s;
+  font-size: 20px;
+  font-family: 'Base05', cursive;
 }
 .album-thumb img {
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 4px;
   margin-right: 10px;
@@ -157,4 +159,20 @@
   .songbook-content {
     width: 100%;
   }
+}
+
+/* album preview in placeholder */
+.album-preview {
+  margin-top: 20px;
+  text-align: center;
+}
+.album-preview img {
+  max-width: 150px;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto 10px;
+}
+.album-preview h3 {
+  margin: 0;
+  font-family: 'Base05', cursive;
 }
