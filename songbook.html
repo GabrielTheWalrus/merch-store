@@ -34,32 +34,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
   <!-- font awesome style -->
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
+  <link href="css/songbook.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
-  <!-- songbook styles -->
-  <link href="css/songbook.css" rel="stylesheet" />
 
 </head>
 
 <body class="sub_page">
 
   <div class="hero_area">
-    <div class="bg-box" >
+    <div class="bg-box">
       <img src="images/fon-temyy-darkblue-light.jpg" alt="">
     </div>
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
           <a class="navbar-brand" href="index.html">
-            <span>
-              Gabriel Meale
-            </span>
+            <span>Gabriel Meale</span>
           </a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,153 +81,150 @@
         </nav>
       </div>
     </header>
-    <!-- end header section -->
   </div>
 
-  <!-- songbook section -->
-  <section class="songbook_section layout_padding">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="songbook-content">
-            <div id="song-content">
-              <div class="placeholder">
-                <h2>Welcome to the Songbook</h2>
-                <p>Please choose an album and then a song 👆</p>
-                <div id="album-preview"></div>
+  <!-- Main Songbook Section -->
+  <section class="songbook_section">
+    <div class="songbook_container">
+      
+      <!-- Left Sidebar - Albums & Songs -->
+      <aside class="songbook_sidebar">
+        <div class="sidebar_header">
+          <h3>Albums</h3>
+        </div>
+        
+        <div class="albums_list" id="albumsList">
+          <p style="text-align: center; color: #999; padding: 20px 0;">Loading albums...</p>
+        </div>
+      </aside>
+
+      <!-- Right Content Area -->
+      <main class="songbook_content">
+        <!-- mobile toggle albums button -->
+        <button id="showAlbumsBtn" class="btn-nav" style="display:none; margin-bottom:20px;">
+          <i class="fas fa-bars"></i> Albums
+        </button>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+          <div class="empty-state-content">
+            <i class="fas fa-music"></i>
+            <h2>Select a song to begin</h2>
+            <p>Choose an album and song from the menu on the left</p>
+          </div>
+        </div>
+
+        <!-- Song Content -->
+        <div id="songContent" class="song-content hidden">
+          
+          <!-- Audio Player -->
+          <div class="audio-player-section">
+            <h1 id="songTitle" class="song-title"></h1>
+            <p id="songArtist" class="song-artist"></p>
+            <div id="spotifyContainer" class="spotify-container">
+              <!-- Spotify iframe will be inserted here -->
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="song-navigation">
+            <button id="prevSongBtn" class="btn-nav btn-nav-prev" title="Previous song">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button id="nextSongBtn" class="btn-nav btn-nav-next" title="Next song">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Lyrics Section -->
+          <div class="lyrics-section">
+            <div class="lyrics-container">
+              <div class="lyrics-column">
+                <h3>Original</h3>
+                <div id="lyricsOriginal" class="lyrics-text">
+                  <!-- Lyrics will be populated here -->
+                </div>
               </div>
-              <div id="album-list" class="album-list-container">
-                <!-- Album buttons will be dynamically added here -->
+              <div class="lyrics-column">
+                <h3>Português</h3>
+                <div id="lyricsTranslated" class="lyrics-text">
+                  <!-- Translated lyrics will be populated here -->
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Story Section -->
+          <div class="story-section">
+            <h3><i class="fas fa-book"></i> About This Song</h3>
+            <div id="songStory" class="story-content">
+              <!-- Story will be populated here -->
+            </div>
+          </div>
+
+          <!-- Technical Details -->
+          <div class="technical-section">
+            <h3><i class="fas fa-cogs"></i> Technical Details</h3>
+            <div class="technical-grid">
+              <div class="tech-item">
+                <span class="tech-label">Key:</span>
+                <span id="songKey" class="tech-value">-</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-label">BPM:</span>
+                <span id="songBPM" class="tech-value">-</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-label">Duration:</span>
+                <span id="songDuration" class="tech-value">-</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-label">Genre:</span>
+                <span id="songGenre" class="tech-value">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Credits Section -->
+          <div class="credits-section">
+            <h3><i class="fas fa-users"></i> Credits</h3>
+            <div id="songCredits" class="credits-content">
+              <!-- Credits will be populated here -->
+            </div>
+          </div>
+
         </div>
-      </div>
+
+      </main>
+
     </div>
   </section>
-  <!-- end songbook section -->
 
   <!-- footer section -->
   <footer class="footer_section">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 footer-col">
-          <div class="footer_detail">
-            <a href="" class="footer-logo">
-              GABRIEL MEALE
-            </a>
-            <p>
-              Artista Independente e Produtor Musical
-            </p>
-            <div class="footer_social">
-              <a href="https://www.instagram.com/gabs_the_walrus" target="_blank">
-                <i class="fab fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://www.youtube.com/@gabrielthewalrus" target="_blank">
-                <i class="fab fa-youtube" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Contato
-            </h4>
-            <div class="contact_link_box">
-              <a href="mailto:gabriel.meale@hotmail.com">
-                <i class="fabfa-envelope" aria-hidden="true"></i>
-                <span>
-                  gabriel.meale@hotmail.com
-                </span>
-              </a>
-            </div>
-            <div class="footer_social">
-              <a href="https://www.instagram.com/gabs_the_walrus" target="_blank">
-                <i class="fab fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://www.youtube.com/@gabrielthewalrus" target="_blank">
-                <i class="fab fa-youtube" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-info">
-        <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a><br><br>
-          &copy; <span id="displayYear"></span> Distributed By
-          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-        </p>
+      <div class="footer_content">
+        <p>&copy; 2024 Gabriel Meale. All rights reserved.</p>
       </div>
     </div>
   </footer>
-  <!-- footer section -->
 
-  <!-- jQery -->
+  <!-- jQuery -->
   <script src="js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <!-- bootstrap js -->
   <script src="js/bootstrap.js"></script>
   <!-- owl slider -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <!-- isotope js -->
   <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
   <!-- nice select -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
-  <!-- songbook js -->
+  <!-- Custom js -->
+  <script src="js/custom.js"></script>
+  <!-- Songbook js -->
   <script src="js/songbook.js"></script>
-
-  <!-- Songbook data - Edit this section to add/modify albums and songs -->
-  <script>
-    // Songbook data - Modify this object to add your albums and songs
-    window.songbookData = {
-      "albums": [
-        {
-          "id": "album1",
-          "title": "Primeiro Álbum",
-          "cover": "images/gerbornstayborn.png",
-          "songs": [
-            {
-              "id": "song1",
-              "title": "Música 1",
-              "lyrics": "Letra da música 1...",
-              "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID1' frameborder='0' allowfullscreen></iframe>",
-              "technical": "Parte técnica da música 1...",
-              "credits": "Quem tocou: Pessoa A - guitarra, Pessoa B - bateria"
-            },
-            {
-              "id": "song2",
-              "title": "Música 2",
-              "lyrics": "Letra da música 2...",
-              "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID2' frameborder='0' allowfullscreen></iframe>",
-              "technical": "Parte técnica da música 2...",
-              "credits": "Quem tocou: Pessoa C - baixo, Pessoa D - teclado"
-            }
-          ]
-        },
-        {
-          "id": "album2",
-          "title": "Segundo Álbum",
-          "cover": "images/album2.jpg",
-          "songs": [
-            {
-              "id": "song3",
-              "title": "Música 3",
-              "lyrics": "Letra da música 3...",
-              "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID3' frameborder='0' allowfullscreen></iframe>",
-              "technical": "Parte técnica da música 3...",
-              "credits": "Quem tocou: Pessoa E - voz, Pessoa F - percussão"
-            }
-          ]
-        }
-      ]
-    };
-  </script>
 
 </body>
 
