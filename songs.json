@@ -1,0 +1,42 @@
+{
+  "albums": [
+    {
+      "id": "album1",
+      "title": "Primeiro Álbum",
+      "cover": "images/album1.jpg",
+      "songs": [
+        {
+          "id": "song1",
+          "title": "Música 1",
+          "lyrics": "Letra da música 1...",
+          "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID1' frameborder='0' allowfullscreen></iframe>",
+          "technical": "Parte técnica da música 1...",
+          "credits": "Quem tocou: Pessoa A - guitarra, Pessoa B - bateria"
+        },
+        {
+          "id": "song2",
+          "title": "Música 2",
+          "lyrics": "Letra da música 2...",
+          "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID2' frameborder='0' allowfullscreen></iframe>",
+          "technical": "Parte técnica da música 2...",
+          "credits": "Quem tocou: Pessoa C - baixo, Pessoa D - teclado"
+        }
+      ]
+    },
+    {
+      "id": "album2",
+      "title": "Segundo Álbum",
+      "cover": "images/album2.jpg",
+      "songs": [
+        {
+          "id": "song3",
+          "title": "Música 3",
+          "lyrics": "Letra da música 3...",
+          "iframe": "<iframe src='https://www.youtube.com/embed/VIDEO_ID3' frameborder='0' allowfullscreen></iframe>",
+          "technical": "Parte técnica da música 3...",
+          "credits": "Quem tocou: Pessoa E - voz, Pessoa F - percussão"
+        }
+      ]
+    }
+  ]
+}

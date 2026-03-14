@@ -1,0 +1,119 @@
+/* Songbook Styles */
+.songbook_section {
+  padding: 60px 0;
+}
+
+.songbook-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.album-selector, .song-selector {
+  margin-bottom: 20px;
+}
+
+.album-selector select, .song-selector select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.song-display {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.song-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.song-lyrics {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.song-iframe {
+  margin-bottom: 20px;
+}
+
+.song-iframe iframe {
+  width: 100%;
+  height: 315px;
+  border: none;
+}
+
+.song-technical, .song-credits {
+  margin-bottom: 15px;
+}
+
+.song-technical h4, .song-credits h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.album-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.album-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.album-button:hover {
+  background: #0056b3;
+}
+
+.placeholder {
+  text-align: center;
+  
+}
+
+.banana{
+    width: 150px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+#album-preview img {
+  max-width: 200px;
+  margin-top: 20px;
+  border-radius: 8px;
+  width: 150px
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .songbook-content {
+    padding: 0 10px;
+  }
+
+  .song-title {
+    font-size: 20px;
+  }
+
+  .song-iframe iframe {
+    height: 250px;
+  }
+
+  .album-list-container {
+    justify-content: center;
+  }
+}
